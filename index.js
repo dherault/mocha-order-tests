@@ -11,6 +11,7 @@ const each = Mocha.Suite.prototype.eachTest;
 Mocha.prototype.run = function () {
   this.files = sortFiles(this.files);
 
+  console.log(this.files);
   return run.apply(this, arguments);
 };
 
@@ -23,7 +24,7 @@ function sortFiles(fileNames) {
     return fileNames;
   }
 
-  const testsOrderJsonFileContent = fs.readFileSync(testsOrderJsonFilePath, 'uft-8');
+  const testsOrderJsonFileContent = fs.readFileSync(testsOrderJsonFilePath, 'utf-8');
   let testsOrder;
 
   try {
@@ -35,5 +36,34 @@ function sortFiles(fileNames) {
     return fileNames;
   }
 
-  console.log(testOrder);
+  console.log(testsOrder);
+
+  testsOrder = testsOrder.map(filePath => {
+    if (filePath.startsWith('/**/')) {
+      return filePath;
+    }
+
+    return `/**/${filePath}`;
+  });
+
+  const sortedTestsObject = {};
+
+  testsOrder.forEach(filePath => {
+    sortedTestsObject[filePath] = [];
+  });
+
+  sortedTestsObject._ = [];
+
+  fileNames.forEach(fileName => {
+    testsOrder.forEach(filePath => {
+      if (micromatch.isMatch(filePath, fileName)) {
+        sortedTestsObject[filePath].push(fileName);
+      }
+      else {
+        sortedTestsObject._.push(fileName);
+      }
+    });
+  });
+
+  return Object.values(sortedTestsObject).reduce((a, b) => a.concat(...b), []);
 }

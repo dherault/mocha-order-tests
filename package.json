@@ -1,6 +1,6 @@
 {
   "name": "mocha-order-tests",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Order your mocha test efficiently.",
   "main": "index.js",
   "scripts": {
@@ -18,5 +18,8 @@
   "homepage": "https://github.com/dherault/mocha-order-tests#readme",
   "peerDependencies": {
     "mocha": ">=6"
+  },
+  "dependencies": {
+    "micromatch": "^4.0.2"
   }
 }
