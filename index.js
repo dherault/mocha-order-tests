@@ -11,7 +11,6 @@ const each = Mocha.Suite.prototype.eachTest;
 Mocha.prototype.run = function () {
   this.files = sortFiles(this.files);
 
-  console.log(this.files);
   return run.apply(this, arguments);
 };
 
