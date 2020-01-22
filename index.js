@@ -56,7 +56,7 @@ function sortFiles(fileNames) {
 
   fileNames.forEach(fileName => {
     testsOrder.forEach(filePath => {
-      if (micromatch.isMatch(filePath, fileName)) {
+      if (micromatch.isMatch(fileName, filePath)) {
         sortedTestsObject[filePath].push(fileName);
       }
       else {
