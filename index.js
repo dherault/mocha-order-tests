@@ -35,8 +35,6 @@ function sortFiles(fileNames) {
     return fileNames;
   }
 
-  console.log(testsOrder);
-
   testsOrder = testsOrder.map(filePath => {
     if (filePath.startsWith('/**/')) {
       return filePath;
